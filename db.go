@@ -9,9 +9,9 @@ import (
 )
 
 func NewDB() (*gorm.DB, error) {
-	dsn := os.Getenv("DB_URL")
+	dsn := os.Getenv("MINSTACK_DB_URL")
 	if dsn == "" {
-		return nil, fmt.Errorf("DB_URL is not set")
+		return nil, fmt.Errorf("MINSTACK_DB_URL is not set")
 	}
 
 	return gorm.Open(sqlite.Open(dsn), &gorm.Config{
