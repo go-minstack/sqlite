@@ -1,7 +1,6 @@
 package sqlite
 
 import (
-	"fmt"
 	"log/slog"
 	"os"
 	"time"
@@ -13,7 +12,8 @@ import (
 func NewDB(log *slog.Logger) (*gorm.DB, error) {
 	dsn := os.Getenv("MINSTACK_DB_URL")
 	if dsn == "" {
-		return nil, fmt.Errorf("MINSTACK_DB_URL is not set")
+		log.Warn("MINSTACK_DB_URL is not set, using in-memory SQLite database")
+		dsn = ":memory:"
 	}
 
 	return gorm.Open(sqlite.Open(dsn), &gorm.Config{
